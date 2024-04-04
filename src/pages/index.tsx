@@ -9,9 +9,9 @@ export default function Home() {
   return (
     <HomeContainer>
       <Product>
-        <Image src={tshirt1} width={520} height={480} />
-        <Image src={tshirt2} width={520} height={480} />
-        <Image src={tshirt3} width={520} height={480} />
+        <Image src={tshirt1} width={520} height={480} alt="" />
+        <Image src={tshirt2} width={520} height={480} alt="" />
+        <Image src={tshirt3} width={520} height={480} alt="" />
 
         <footer>
           <strong>Camisa X</strong>
