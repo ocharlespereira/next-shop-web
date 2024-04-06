@@ -10,9 +10,10 @@ import tshirt3 from "@/assets/tshirt/3.png";
 import "keen-slider/keen-slider.min.css";
 
 export default function Home() {
-  const { sliderRef } = useKeenSlider({
+  const [sliderRef] = useKeenSlider({
     slides: {
       perView: 3,
+      spacing: 48,
     },
   });
 
