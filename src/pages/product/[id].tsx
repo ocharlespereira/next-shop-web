@@ -38,6 +38,15 @@ export default function Product({ product }: ProductProps) {
   );
 }
 
+export const getStaticPaths = async () => {
+  return {
+    paths: [
+      {params: id: 'prod_H1J9Zzv3Z2Z2Z2' }, //carrega os essenciais
+    ],
+    fallback: 'blocking' // true, false, 'blocking' só mostra tela quando tiver dados
+  }
+}
+
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
   params,
 }: any) => {
