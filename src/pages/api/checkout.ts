@@ -12,7 +12,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ error: 'Price ID is required' });
   }
 
-  const successUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/success`;
+  const successUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/success?session_id={CHECKOUT_SESSION_ID}`;
   const cancelUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/cancel`;
 
   const ckeckoutSession = await stripe.checkout.sessions.create({
