@@ -1,4 +1,5 @@
 import { HomeContainer, Product } from '@/styles/pages/home';
+import Head from 'next/head';
 import Image from 'next/image';
 import { stripe } from '@/lib/stripe';
 import { GetServerSideProps, GetStaticProps } from 'next';
@@ -31,26 +32,32 @@ export default function Home({ products }: HomeProps) {
   });
 
   return (
-    <HomeContainer ref={sliderRef} className="keen-slider">
-      {products.map((product) => {
-        return (
-          <Link
-            href={`/product/${product.id}`}
-            key={product.id}
-            prefetch={false}
-          >
-            <Product key={product.id} className="keen-slider__slide">
-              <Image src={product.imageUrl} width={520} height={480} alt="" />
+    <>
+      <Head>
+        <title>Home | E-commerce</title>
+      </Head>
 
-              <footer>
-                <strong>{product.name}</strong>
-                <span>R$ {product.price.toFixed(2)}</span>
-              </footer>
-            </Product>
-          </Link>
-        );
-      })}
-    </HomeContainer>
+      <HomeContainer ref={sliderRef} className="keen-slider">
+        {products.map((product) => {
+          return (
+            <Link
+              href={`/product/${product.id}`}
+              key={product.id}
+              prefetch={false}
+            >
+              <Product key={product.id} className="keen-slider__slide">
+                <Image src={product.imageUrl} width={520} height={480} alt="" />
+
+                <footer>
+                  <strong>{product.name}</strong>
+                  <span>R$ {product.price.toFixed(2)}</span>
+                </footer>
+              </Product>
+            </Link>
+          );
+        })}
+      </HomeContainer>
+    </>
   );
 }
 

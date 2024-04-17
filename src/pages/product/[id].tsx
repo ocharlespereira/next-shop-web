@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import Head from 'next/head';
 import { GetStaticProps } from 'next';
 import Stripe from 'stripe';
 import axios from 'axios';
@@ -23,40 +24,47 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false);
 
   async function handleBuyProduct() {
     try {
-      setIsCreatingCheckoutSession(true)
+      setIsCreatingCheckoutSession(true);
 
-      const response = await axios.post('/api/checkout', { 
+      const response = await axios.post('/api/checkout', {
         priceId: product.defaultPriceId,
-       })
+      });
 
-       const { checkoutUrl } = response.data;
+      const { checkoutUrl } = response.data;
 
       window.location.href = checkoutUrl;
     } catch (error) {
       setIsCreatingCheckoutSession(false);
       alert('Ocorreu um erro ao processar o checkout.');
-    } 
+    }
   }
 
   return (
-    <ProductContainer>
-      <ImageContainer>
-        <Image src={product.imageUrl} width={520} height={480} alt="" />
-      </ImageContainer>
+    <>
+      <Head>
+        <title>{product.name} | E-commerce</title>
+      </Head>
 
-      <ProductDetails>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
+      <ProductContainer>
+        <ImageContainer>
+          <Image src={product.imageUrl} width={520} height={480} alt="" />
+        </ImageContainer>
 
-        <p>{product.description}</p>
+        <ProductDetails>
+          <h1>{product.name}</h1>
+          <span>{product.price}</span>
 
-        <button disabled={isCreatingCheckoutSession}>Comprar Agora</button>
-      </ProductDetails>
-    </ProductContainer>
+          <p>{product.description}</p>
+
+          <button disabled={isCreatingCheckoutSession}>Comprar Agora</button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   );
 }
 
@@ -65,9 +73,9 @@ export const getStaticPaths = async () => {
     paths: [
       {params: id: 'prod_H1J9Zzv3Z2Z2Z2' }, //carrega os essenciais, pode ser lista
     ],
-    fallback: 'blocking' // true, false, 'blocking' só mostra tela quando tiver dados
-  }
-}
+    fallback: 'blocking', // true, false, 'blocking' só mostra tela quando tiver dados
+  };
+};
 
 export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
   params,
